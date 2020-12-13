@@ -6,5 +6,6 @@ const MessageSchema = mongoose.Schema({
     timestamp:String,
     reciver:Boolean
 });
-
+ 
+    // useless comment
 module.exports = mongoose.model('messagecontent',MessageSchema);
