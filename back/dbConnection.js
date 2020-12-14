@@ -1,16 +1,18 @@
 var mongoose = require('mongoose');
 const Pusher = require('pusher');
+require('dotenv').config() ;
+
 
 const pusher = new Pusher({
-  appId: "1122523",
-  key: "6e0436202af424d9905b",
-  secret: "0e47e21e112fd2f915e0",
-  cluster: "eu",
-  useTLS: true
+  appId: process.env.Pusher_AppId,
+  key: process.env.Pusher_Key,
+  secret: process.env.Pusher_secret,
+  cluster: process.env.Pusher_cluster,
+  useTLS: process.env.Pusher_useTLS
 });
 // Db config 
 
-const Connection_url="mongodb+srv://admin:sispoof@cluster0.3rdbn.mongodb.net/ChatApp?retryWrites=true&w=majority";
+const Connection_url= process.env.MongoDb;
 
 // var connection =
  mongoose.connect(Connection_url,{
@@ -24,6 +26,14 @@ db.once('open',()=>{
   console.log('DB connected');
 
   const msgCollection = db.collection("messagecontents");
+
+  /* implementing instruction to delete all the documents inside the collection */
+    // msgCollection.remove({},(err,res)=>{
+    //   if(err)
+    //   console.log('there is an error',err);
+    //   else 
+    //   console.log('successfully deleted everyThing!',res);
+    // })
   const changeStream = msgCollection.watch();
 
   changeStream.on("change",(change)=>{

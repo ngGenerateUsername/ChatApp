@@ -11,6 +11,9 @@ router.get('/api/messages/sync',function(req,res){
     if(err)
     return res.status(500).json({error:'error on fetching the messages'});
 
+    if(data.length == 0)
+      return res.status(200).json({message:'there is no messages'});
+
     return res.status(201).json({data: data});
   });
   
